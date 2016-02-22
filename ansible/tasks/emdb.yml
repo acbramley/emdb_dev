@@ -1,0 +1,76 @@
+---
+# These additions not needed for ubuntu/wily64, but they get ubuntu/trusty64 closish to being viable.
+#- name: Add repositories
+#  command: 'apt-add-repository universe'
+#  changed_when: false
+#- name: Add repositories
+#  command: 'apt-add-repository multiverse'
+#  changed_when: false
+
+- name: Add Entermedia gpg
+  copy:
+    src: files/entermediadb.gpg
+    dest: /etc/apt/trusted.gpg.d/entermediadb.gpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Add Entermedia repository
+  apt_repository:
+    repo: 'deb http://packages.entermediadb.org/repo/apt stable main'
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Set Entermedia group
+  group:
+    name: entermedia
+    state: present
+
+- name: Set Entermedia user
+  user:
+    name: entermedia
+    group: entermedia
+    state: present
+
+- name: Install Entermedia DB with package manager (slow on new provision)
+  apt:
+    name: entermediadb
+    state: present
+
+- name: Copy the wrapper for the site install script
+  copy:
+    src: files/emdb-install.sh
+    dest: /usr/bin/emdb-install.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: BUG, Fix site install script bug
+  replace:
+    dest: /usr/bin/entermediadb
+    regexp: 'webapp/WEB-INF/data/\*"'
+    replace: 'webapp/WEB-INF/data/"*'
+    backup: yes
+
+- stat: path=/opt/entermediadb
+  register: site_installed_path
+
+- name: Install a site instance of Entermedia
+  shell: emdb-install.sh >> /var/log/emdb-log.txt
+  when: site_installed_path.stat.exists == False
+
+- name: Set the JRE_HOME variable in the new application.
+  lineinfile:
+    dest: /opt/entermediadb/tomcat/bin/setenv.sh
+    line: 'export JRE_HOME=/usr/bin/java'
+
+- name: Restart for apt updates on new box
+  shell: 'sleep 2 && shutdown -r now "Restart new Ubuntu box"'
+  async: 1
+  poll: 0
+  sudo: true
+  ignore_errors: true
+  when: site_installed_path.stat.exists == False
