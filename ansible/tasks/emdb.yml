@@ -48,12 +48,17 @@
     group: root
     mode: 0755
 
+# Fix https://github.com/entermedia-community/entermediadb-installers/commit/25aaaf60e8420aa9cc3aa1b80b0b31ba5a0d775a
+- name: BUG, Fix site install script bug
+  replace:
+    dest: /usr/bin/entermediadb
+    regexp: '}/webapp/\*"'
+    replace: '}"/webapp/*'
 - name: BUG, Fix site install script bug
   replace:
     dest: /usr/bin/entermediadb
     regexp: 'webapp/WEB-INF/data/\*"'
     replace: 'webapp/WEB-INF/data/"*'
-    backup: yes
 
 - stat: path=/opt/entermediadb
   register: site_installed_path
