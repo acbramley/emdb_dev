@@ -9,7 +9,7 @@ application = YAML.load_file 'settings.yml'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # With wily we get universe and multiverse to meet EMDB installation requirements.
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "ubuntu/wily64"
   config.ssh.insert_key = false
 
   config.vm.provider :virtualbox do |v|0

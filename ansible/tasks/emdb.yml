@@ -49,12 +49,12 @@
     mode: 0755
 
 # Fix https://github.com/entermedia-community/entermediadb-installers/commit/25aaaf60e8420aa9cc3aa1b80b0b31ba5a0d775a
-- name: BUG, Fix site install script bug
+- name: BUG, Fix site install script bug part 1
   replace:
     dest: /usr/bin/entermediadb
     regexp: '}/webapp/\*"'
     replace: '}"/webapp/*'
-- name: BUG, Fix site install script bug
+- name: BUG, Fix site install script bug part 2
   replace:
     dest: /usr/bin/entermediadb
     regexp: 'webapp/WEB-INF/data/\*"'
@@ -67,6 +67,12 @@
   shell: emdb-install.sh >> /var/log/emdb-log.txt
   when: site_installed_path.stat.exists == False
 
+# Fix https://github.com/entermedia-community/entermediadb-installers/issues/1
+- name: BUG, copy node.xml part 1
+  command: cp /usr/share/entermediadb/webapp/WEB-INF/node.xml /opt/entermediadb/webapp/WEB-INF/node.xml
+- name: BUG, copy node.xml part 2
+  command: 'chown entermedia:entermedia /opt/entermediadb/webapp/WEB-INF/node.xml'
+
 #- name: Set the JRE_HOME variable in the new application.
 #  lineinfile:
 #    dest: /opt/entermediadb/tomcat/bin/setenv.sh
@@ -78,3 +84,7 @@
   poll: 0
   ignore_errors: true
   when: site_installed_path.stat.exists == False
+
+- name: Restart entermedia after server restart
+  command: '/opt/entermediadb/tomcat/bin/startup.sh'
+  become_user: entermedia
