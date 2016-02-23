@@ -5,7 +5,7 @@ Entermedia DB provisioned to a local `Vagrant` using a simple `Ansible` playbook
 You can change the IP and box name in the settings.yml file but this shouldn't be needed.
 
 ## Web access
-After installation, the application is available at http://192.168.141.100:8080/manager.
+After installation, go http://manager/authentication/nopermissions.html and log in with admin/admin
 
 ## Ansible
 The ansible provisioning script (playbook) is based on the instructions for installing Entermedia DB on Ubuntu http://entermediadb.org/knowledge/ubuntu_installation/
