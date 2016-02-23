@@ -1,4 +1,4 @@
-# Entermedia DB
+# Entermedia DB w Vagrant & Ansible
 This project provides an [Entermedia DB](http://entermediadb.org/) instance provisioned to a local `Vagrant` Ubuntu VM, using a simple `Ansible` playbook. This is intended for development purposes, and to prove the installer works.
 
 ## Requirements
