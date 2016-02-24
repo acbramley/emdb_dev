@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
 
   config.vm.provider :virtualbox do |v|0
-    v.name = application['name']
+    v.name = application['vagrant_name']
     v.memory = 1024
     v.cpus = 2
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
