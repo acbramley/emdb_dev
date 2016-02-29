@@ -1,0 +1,5 @@
+---
+#- name: Install Guest additions
+#  apt:
+#    name: virtualbox-guest-additions-iso
+#    state: present
