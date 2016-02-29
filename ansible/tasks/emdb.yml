@@ -35,6 +35,14 @@
     group: entermedia
     state: present
 
+# There might be a nicer way to do this, basically we'll do most things as the entermedia user.
+# CD into where we installed the app, and su to entermedia user.
+# Tip: After login, type 'exit' to get to the vagrant user who can sudo.
+- name: Auto su to entermedia user
+  lineinfile:
+    dest: /home/vagrant/.bashrc
+    line: cd /opt/entermediadb; sudo su entermedia
+
 - name: Install Entermedia DB with package manager (slow on new provision)
   apt:
     name: entermediadb
@@ -49,16 +57,16 @@
     mode: 0755
 
 # Fix https://github.com/entermedia-community/entermediadb-installers/commit/25aaaf60e8420aa9cc3aa1b80b0b31ba5a0d775a
-- name: BUG, Fix site install script bug part 1
-  replace:
-    dest: /usr/bin/entermediadb
-    regexp: '}/webapp/\*"'
-    replace: '}"/webapp/*'
-- name: BUG, Fix site install script bug part 2
-  replace:
-    dest: /usr/bin/entermediadb
-    regexp: 'webapp/WEB-INF/data/\*"'
-    replace: 'webapp/WEB-INF/data/"*'
+#- name: BUG, Fix site install script bug part 1
+#  replace:
+#    dest: /usr/bin/entermediadb
+#    regexp: '}/webapp/\*"'
+#    replace: '}"/webapp/*'
+#- name: BUG, Fix site install script bug part 2
+#  replace:
+#    dest: /usr/bin/entermediadb
+#    regexp: 'webapp/WEB-INF/data/\*"'
+#    replace: 'webapp/WEB-INF/data/"*'
 
 - stat: path=/opt/entermediadb
   register: site_installed_path
@@ -68,10 +76,10 @@
   when: site_installed_path.stat.exists == False
 
 # Fix https://github.com/entermedia-community/entermediadb-installers/issues/1
-- name: BUG, copy node.xml part 1
-  command: cp /usr/share/entermediadb/webapp/WEB-INF/node.xml /opt/entermediadb/webapp/WEB-INF/node.xml
-- name: BUG, copy node.xml part 2
-  command: 'chown entermedia:entermedia /opt/entermediadb/webapp/WEB-INF/node.xml'
+#- name: BUG, copy node.xml part 1
+#  command: cp /usr/share/entermediadb/webapp/WEB-INF/node.xml /opt/entermediadb/webapp/WEB-INF/node.xml
+#- name: BUG, copy node.xml part 2
+#  command: 'chown entermedia:entermedia /opt/entermediadb/webapp/WEB-INF/node.xml'
 
 #- name: Set the JRE_HOME variable in the new application.
 #  lineinfile:
