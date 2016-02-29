@@ -1,8 +1,11 @@
 # Entermedia DB w Vagrant & Ansible
 This project provides an [Entermedia DB](http://entermediadb.org/) instance provisioned to a local `Vagrant` Ubuntu VM, using a simple `Ansible` playbook. This is intended for development purposes, and to prove the installer works.
 
+## *Warning*
+Unstable and may not work - follow this post for updates https://groups.google.com/forum/#!topic/entermedia/AjU3W_C6wgU
+
 ## Requirements
-This was tested on Ubuntu, but it should work on Windows and Mac. It was developed with:
+This is tested on Ubuntu, but it should work on Windows and Mac. Clone the repository locally, switch to the /ubuntu directory, and run vagrant up. You'll need these tools.
 
 * Virtualbox
 * Vagrant 1.8
@@ -22,3 +25,5 @@ After installation, assuming you have not modified the settings.yml, you can vis
 
 * http://192.168.141.100:8080/manager/authentication/nopermissions.html (and log in with admin/admin)
 * http://192.168.141.100:8080/mediadb/index.html
+* http://192.168.141.100:8080/media/services/rest/listcatalogs.xml
+
