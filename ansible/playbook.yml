@@ -2,4 +2,5 @@
 - hosts: all
   become: true
   tasks:
+    - include: tasks/general.yml
     - include: tasks/emdb.yml
