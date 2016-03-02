@@ -3,3 +3,10 @@
 #  apt:
 #    name: virtualbox-guest-additions-iso
 #    state: present
+
+# Dev tools
+- name: Install general tools.
+  yum: name={{item}} state=present
+  with_items:
+    - lynx
+    - vim

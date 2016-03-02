@@ -1,7 +1,7 @@
 ---
 - name: Copy the yum repo configuration.
   copy:
-    src: files/entermedia.repo
+    src: files/yum/entermedia.repo
     dest: /etc/yum.repos.d/entermedia.repo
     owner: root
     group: root
@@ -10,9 +10,23 @@
 - name: Upgrade all packages.
   yum: name=* state=latest
 
+# @todo: install a specific version? eg entermediadb-8.21-1851
 - name: Install Entermedia DB.
   yum:
      name: entermediadb
      state: present
 
-# ideally... sudo yum install entermediadb-8.21-1851
+- name: Copy the wrapper for the site install script.
+  copy:
+    src: files/emdb-install.sh
+    dest: /usr/bin/emdb-install.sh
+    owner: root
+    group: root
+    mode: 0755
+
+#- stat: path=/opt/entermediadb
+#  register: site_installed_path
+
+#- name: Install a site instance of Entermedia
+#  shell: emdb-install.sh >> /var/log/emdb-install-log.txt
+#  when: site_installed_path.stat.exists == False

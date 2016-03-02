@@ -3,4 +3,5 @@
   become: true
   tasks:
     - include: tasks/general.yml
+    - include: tasks/proxy.yml
     - include: tasks/emdb.yml
