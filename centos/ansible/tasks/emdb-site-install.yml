@@ -1,0 +1,7 @@
+---
+- stat: path=/opt/entermediadb
+  register: site_installed_path
+
+- name: Install a tomcat instance
+  shell: emdb-install.sh >> /var/log/emdb-install-log.txt
+  when: site_installed_path.stat.exists == False

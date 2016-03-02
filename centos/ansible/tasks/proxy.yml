@@ -19,9 +19,10 @@
 
 - name: Allow nginx proxy_pass to work.
   command: setsebool -P httpd_can_network_connect true
+  changed_when: false
 
 - name: Restart nginx
   service:
     name: nginx
     state: reloaded
-
+  changed_when: false

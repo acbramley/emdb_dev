@@ -23,10 +23,3 @@
     owner: root
     group: root
     mode: 0755
-
-#- stat: path=/opt/entermediadb
-#  register: site_installed_path
-
-#- name: Install a site instance of Entermedia
-#  shell: emdb-install.sh >> /var/log/emdb-install-log.txt
-#  when: site_installed_path.stat.exists == False
