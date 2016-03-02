@@ -1,5 +1,5 @@
 ---
-- name: Copy the yum repo configuration.
+- name: Copy the yum repo configuration
   copy:
     src: files/yum/entermedia.repo
     dest: /etc/yum.repos.d/entermedia.repo
@@ -7,16 +7,16 @@
     group: root
     mode: 0644
 
-- name: Upgrade all packages.
+- name: Upgrade all packages
   yum: name=* state=latest
 
 # @todo: install a specific version? eg entermediadb-8.21-1851
-- name: Install Entermedia DB.
+- name: Install Entermedia DB
   yum:
      name: entermediadb
      state: present
 
-- name: Copy the wrapper for the site install script.
+- name: Copy the wrapper for the site install script
   copy:
     src: files/emdb-install.sh
     dest: /usr/bin/emdb-install.sh

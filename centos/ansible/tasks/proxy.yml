@@ -9,7 +9,7 @@
      name: nginx
      state: present
 
-- name: Copy the nginx configuration.
+- name: Copy the nginx configuration
   copy:
     src: files/nginx/entermedia.conf
     dest: /etc/nginx/conf.d/entermedia.conf
@@ -17,7 +17,7 @@
     group: root
     mode: 0644
 
-- name: Allow nginx proxy_pass to work.
+- name: Allow nginx proxy_pass to work
   command: setsebool -P httpd_can_network_connect true
   changed_when: false
 
