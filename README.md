@@ -23,7 +23,8 @@ This project was created to support the development of the Drupal 8 [EmBridge mo
 ## Common links
 After installation, assuming you have not modified the settings.yml, you can visit these links:
 
-(Centos IP defaults to .101, Ubuntu is.100
+(Centos IP defaults to .101, Ubuntu is .100)
 * http://192.168.141.101/manager/authentication/nopermissions.html (and log in with admin/admin)
 * http://192.168.141.101/mediadb/index.html
+* http://192.168.141.101/mediadb/docs/showdoc.html?id=uploadasset&section=moduleasset
 * http://192.168.141.101/media/services/rest/listcatalogs.xml
