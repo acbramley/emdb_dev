@@ -16,6 +16,11 @@
      name: entermediadb
      state: present
 
+- name: Add EMDB version display to the login
+  lineinfile:
+    dest: /home/vagrant/.bashrc
+    line: 'yum -q info entermediadb | grep "Name\|Version\|Release"'
+
 - name: Copy the wrapper for the site install script
   copy:
     src: files/emdb-install.sh

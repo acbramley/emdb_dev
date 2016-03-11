@@ -1,5 +1,0 @@
----
-- hosts: all
-  become: true
-  tasks:
-    - include: tasks/emdb-site-install.yml
