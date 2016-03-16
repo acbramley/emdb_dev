@@ -28,6 +28,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :ansible do |ansible|
     # ansible.verbose = "vvv"
     ansible.playbook = "ansible/playbook.yml"
+    ansible.extra_vars = {
+      vagrant_name: application['vagrant_name'],
+      vagrant_ip: application['vagrant_ip'],
+    }
   end
 
 end
