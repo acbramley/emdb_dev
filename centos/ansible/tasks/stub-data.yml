@@ -8,7 +8,9 @@
   pip:
     name: httplib2
 
-#
+# It appears that the call to create a new user fails unless we log in as
+# admin through the UI, I suspect there is some setup that occurs on log in
+# for the first time.
 - name: Log in through the UI for the first time so stuff happens
   uri:
     url: "http://{{ vagrant_ip }}/emshare/authentication/login.html"
