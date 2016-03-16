@@ -8,16 +8,36 @@
   pip:
     name: httplib2
 
+#
+- name: Log in through the UI for the first time so stuff happens
+  uri:
+    url: "http://{{ vagrant_ip }}/emshare/authentication/login.html"
+    method: POST
+    body: "loginokpage=&accountname=admin&password=admin&submit=Login"
+    status_code: 302
+    HEADER_Content-Type: "application/x-www-form-urlencoded"
+  register: do_first_login
+
+- debug: msg="{{ do_first_login }}"
+
 - name: Get an auth cookie
   uri:
     url: "http://{{ vagrant_ip }}/mediadb/services/authentication/login"
     method: POST
     body: "{{ lookup('file', 'files/json/login.json') }}"
     body_format: json
-    HEADER_Content-Type: "application/json"
   register: do_login
 
 - debug: msg="{{ do_login }}"
+
+- name: Initialise the JSON api. Not sure why or what this does exactly...
+  uri:
+    url: "http://{{ vagrant_ip }}/mediadb/views/actions/setupmodules.html"
+    method: GET
+    HEADER_Cookie: "{{ do_login.set_cookie }}"
+  register: do_json_init
+
+- debug: msg="{{ do_json_init}}"
 
 - name: Create an API user
   uri:
@@ -30,22 +50,13 @@
 
 - debug: msg="{{ do_api_user }}"
 
-- name: Initialise the JSON api. Not sure why oir what this does exactly...
-  uri:
-    url: "http://{{ vagrant_ip }}/mediadb/views/actions/setupmodules.html"
-    method: GET
-    HEADER_Cookie: "{{ do_login.set_cookie }}"
-  register: do_json_init
-
-- debug: msg="{{ do_json_init}}"
-
 # Ideally we have an 'api' role, but JSON api is weak on this,
 # just make the api user an administrator.
 - name: Add API user to role (post to html page)
   uri:
     url: "http://{{ vagrant_ip }}/emshare/views/settings/users/usermanager/user/editrole.html"
     method: POST
-    body: "userid=api_user4&username=api_user&searchtype=userprofile&save=true&sourcepath=api_user&id=api_user&field=settingsgroup&settingsgroup.value=administrator"
+    body: "userid=api_user&username=api_user&searchtype=userprofile&save=true&sourcepath=api_user&id=api_user&field=settingsgroup&settingsgroup.value=administrator"
     HEADER_Content-Type: "application/x-www-form-urlencoded"
     HEADER_Cookie: "{{ do_login.set_cookie }}"
   register: do_role
@@ -61,7 +72,7 @@
     HEADER_Cookie: "{{ do_login.set_cookie }}"
   register: do_project
 
-#- debug: msg="{{ do_project }}"
+- debug: msg="{{ do_project }}"
 #- debug: msg="{{ Project created with id: do_project.json.data.id }}"
 
 - name: Create a library
@@ -73,6 +84,6 @@
     HEADER_Cookie: "{{ do_login.set_cookie }}"
   register: do_library
 
-#- debug: msg="{{ do_library }}"
+- debug: msg="{{ do_library }}"
 #- debug: msg="{{ Project created with id: do_library.json.data.id }}"
 
