@@ -23,8 +23,3 @@
     owner: root
     group: root
     mode: 0755
-
-- name: Add EMDB version display to the entermedia user login
-  lineinfile:
-    dest: /home/entermedia/.bashrc
-    line: 'yum -q info entermediadb | grep "Name\|Version\|Release"'

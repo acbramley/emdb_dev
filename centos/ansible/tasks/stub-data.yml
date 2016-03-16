@@ -17,7 +17,7 @@
     HEADER_Content-Type: "application/json"
   register: do_login
 
-#- debug: msg="{{ do_login }}"
+- debug: msg="{{ do_login }}"
 
 - name: Create an API user
   uri:
@@ -28,19 +28,29 @@
     HEADER_Cookie: "{{ do_login.set_cookie }}"
   register: do_api_user
 
-#- debug: msg="{{ do_api_user }}"
+- debug: msg="{{ do_api_user }}"
 
-# Ideally we have an 'api' role, but JSON api is weak on this.
+- name: Initialise the JSON api. Not sure why oir what this does exactly...
+  uri:
+    url: "http://{{ vagrant_ip }}/mediadb/views/actions/setupmodules.html"
+    method: GET
+    HEADER_Cookie: "{{ do_login.set_cookie }}"
+  register: do_json_init
+
+- debug: msg="{{ do_json_init}}"
+
+# Ideally we have an 'api' role, but JSON api is weak on this,
+# just make the api user an administrator.
 - name: Add API user to role (post to html page)
   uri:
     url: "http://{{ vagrant_ip }}/emshare/views/settings/users/usermanager/user/editrole.html"
     method: POST
-    body: "userid=api_user4&username=api_user4&searchtype=userprofile&save=true&sourcepath=api_user4&id=api_user4&field=settingsgroup&settingsgroup.value=administrator"
+    body: "userid=api_user4&username=api_user&searchtype=userprofile&save=true&sourcepath=api_user&id=api_user&field=settingsgroup&settingsgroup.value=administrator"
     HEADER_Content-Type: "application/x-www-form-urlencoded"
     HEADER_Cookie: "{{ do_login.set_cookie }}"
   register: do_role
 
-#- debug: msg="{{ do_role }}"
+- debug: msg="{{ do_role }}"
 
 - name: Create a project
   uri:
