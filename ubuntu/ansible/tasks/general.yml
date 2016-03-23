@@ -3,3 +3,9 @@
 #  apt:
 #    name: virtualbox-guest-additions-iso
 #    state: present
+
+- name: Install various tools
+  apt: name={{item}} state=installed
+  with_items:
+    - lynx
+    - vim

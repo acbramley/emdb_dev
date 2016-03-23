@@ -3,4 +3,7 @@
   become: true
   tasks:
     - include: tasks/general.yml
+    - include: tasks/proxy.yml
     - include: tasks/emdb.yml
+#    - include: tasks/emdb-site-install.yml
+#    - include: tasks/stub-data.yml

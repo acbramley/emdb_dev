@@ -9,7 +9,7 @@ application = YAML.load_file 'settings.yml'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # With wily we get universe and multiverse to meet EMDB installation requirements.
-  config.vm.box = "centos/7"
+  config.vm.box = "ubuntu/trusty64"
   config.ssh.insert_key = false
 
   config.vm.provider :virtualbox do |v|
@@ -28,6 +28,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :ansible do |ansible|
     # ansible.verbose = "vvv"
     ansible.playbook = "ansible/playbook.yml"
+    ansible.extra_vars = {
+      vagrant_name: application['vagrant_name'],
+      vagrant_ip: application['vagrant_ip'],
+    }
   end
 
 end
