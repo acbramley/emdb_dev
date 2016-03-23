@@ -55,4 +55,3 @@
 
 - name: Configure default instance of entermediadb
   shell: /bin/echo -e "\n\n\ny\n" | /usr/bin/entermediadb install
-  
