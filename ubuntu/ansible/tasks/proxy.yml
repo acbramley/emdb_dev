@@ -23,8 +23,8 @@
     state: started
 
 - name: Copy the nginx configuration
-  copy:
-    src: files/nginx/entermedia.conf
+  template:
+    src: templates/nginx/entermedia.conf
     dest: /etc/nginx/conf.d/entermedia.conf
     owner: root
     group: root
