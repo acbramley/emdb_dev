@@ -1,9 +1,6 @@
 # Entermedia DB w Vagrant & Ansible
 This project provides an [Entermedia DB](http://entermediadb.org/) instance provisioned to a local `Vagrant` Ubuntu VM, using a simple `Ansible` playbook. This is intended for development purposes, and to prove the installer works.
 
-## *Warning*
-Unstable and probably just broken on Ubuntu. Centos in progress. - follow this post for updates https://groups.google.com/forum/#!topic/entermedia/AjU3W_C6wgU
-
 ## Requirements
 This is tested on Ubuntu, but it should work on Windows and Mac. Clone the repository locally, switch to the /ubuntu directory, and run vagrant up. You'll need these tools.
 
@@ -23,7 +20,7 @@ This project was created to support the development of the Drupal 8 [EmBridge mo
 ## Common links
 After installation, assuming you have not modified the settings.yml, you can visit these links:
 
-(Centos IP defaults to .101, Ubuntu is .100)
+(Centos IP defaults to .101, Ubuntu is .102)
 * http://192.168.141.101/manager/authentication/nopermissions.html (and log in with admin/admin)
 * http://192.168.141.101/mediadb/index.html
 * http://192.168.141.101/mediadb/docs/showdoc.html?id=uploadasset&section=moduleasset
