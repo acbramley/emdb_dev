@@ -1,4 +1,5 @@
 .vagrant
+.idea
 playbook.retry
 .mnt
 .sync
